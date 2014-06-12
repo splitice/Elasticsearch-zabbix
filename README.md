@@ -3,14 +3,11 @@ Elasticsearch-zabbix
 
 Elasticsearch template and script for zabbix 2.0
 
-This project is a fork of Elasticsearch template from zabbix-grab-bag
-
-https://github.com/untergeek/zabbix-grab-bag
+This project is a fork of [serialsito/Elasticsearch-zabbix][1] using the official python elasticsearch library instead of pyes.
 
 These are made available by me under an Apache 2.0 license.
 
 http://www.apache.org/licenses/LICENSE-2.0.html
-
 
 How it works
 =============
@@ -23,7 +20,6 @@ How it works
 
 Specs
 =====
-
 
 The items here are for monitoring Elasticsearch (presumably for logstash).
 
@@ -44,7 +40,6 @@ There are triggers assigned for the cluster state:
 1 = Yellow (Average, depends on "red")
 
 2 = Red (High)
-
 
 You will likely want to assign a value mapping for the ElasticSearch Cluster Status item.
 
@@ -70,3 +65,6 @@ In any event, the current list of included items is:
 	- Records indexed per second
 * ES Service (1 Item)
 	- Elasticsearch service status
+
+
+  [1]: https://github.com/serialsito/Elasticsearch-zabbix
