@@ -57,9 +57,12 @@ try:
     clients['cluster'] = elasticsearch.client.ClusterClient(clients['default'])
     clients['node'] = elasticsearch.client.NodesClient(clients['default'])
 except Exception, e:
-    etype, evalue, etb = sys.exc_info()
-    logger.error("Error while connection to %s. Exception: %s, Error: %s." % (es_node, etype, evalue))
-    zbx_fail()
+    if sys.argv[2] == 'status':
+	returnval = 0
+    else:
+        etype, evalue, etb = sys.exc_info()
+        logger.error("Error while connection to %s. Exception: %s, Error: %s." % (es_node, etype, evalue))
+        zbx_fail()
 
 if sys.argv[1] == 'cluster':
     if sys.argv[2] in clusterkeys:
@@ -102,8 +105,13 @@ if sys.argv[1] == 'cluster':
 # Mod to check if ES service is up
 elif sys.argv[1] == 'service':
     if sys.argv[2] == 'status':
-        # As we exit when connection fails, we can just return 0 here.
-        returnval = 0
+        returnval = 1
+    elif sys.argv[2] == 'master':
+        state = clients['cluster'].state()
+        master = state["master_node"]
+        master_node = state["nodes"][master]
+        returnval = master_node["name"]
+
 
 else: # Get node specific data.
     nodestats = clients['node'].stats()
